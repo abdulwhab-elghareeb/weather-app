@@ -77,4 +77,24 @@ function createConverterButton() {
   document.body.append(button);
 }
 
-export { createSearchForm, createWeatherCard, createConverterButton };
+function createLoadingCard() {
+  cleanCard();
+  const container = createDOMElement({ elemType: "div", id: "card-container" });
+  const svg = createDOMElement({ elemType: "svg", viewBox: "25 25 50 50" });
+  const circle = createDOMElement({
+    elemType: "circle",
+    r: "20",
+    cy: "50",
+    cx: "50",
+  });
+  svg.append(circle);
+  container.append(svg);
+  document.body.append(container);
+}
+
+export {
+  createSearchForm,
+  createWeatherCard,
+  createConverterButton,
+  createLoadingCard,
+};

@@ -1,4 +1,4 @@
-import { convertToCelsius, convertToFahrenheit } from "./helpers.js";
+import { convertToFahrenheit } from "./helpers.js";
 
 // Unpack to get only the desired data
 function cleanData(

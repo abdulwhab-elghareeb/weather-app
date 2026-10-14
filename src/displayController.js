@@ -3,6 +3,7 @@ import {
   createSearchForm,
   createWeatherCard,
   createConverterButton,
+  createLoadingCard,
 } from "./DOM.js";
 
 import { convertToCelsius, convertToFahrenheit } from "./helpers.js";
@@ -22,6 +23,7 @@ function sendLocation(e) {
   e.preventDefault();
 
   const locationData = getWeatherData(input.value, converterBtn.className);
+  createLoadingCard();
 
   locationData.then((result) => {
     query.locationData = result;

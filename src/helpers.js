@@ -1,5 +1,14 @@
 export function createDOMElement(obj) {
-  const createdElement = document.createElement(obj.elemType);
+  let createdElement;
+
+  if (obj.elemType === "svg" || obj.elemType === "circle") {
+    createdElement = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      obj.elemType,
+    );
+  } else {
+    createdElement = document.createElement(obj.elemType);
+  }
 
   if (obj.textContent) createdElement.textContent = obj.textContent;
   if (obj.className) createdElement.classList.add(obj.className);
@@ -13,7 +22,10 @@ export function createDOMElement(obj) {
   if (obj.for) createdElement.htmlFor = obj.for;
   if (obj.parent) obj.parent.appendChild(createdElement);
   if (obj.noValidate) createdElement.noValidate = obj.noValidate;
-
+  if (obj.viewBox) createdElement.setAttribute("viewBox", obj.viewBox);
+  if (obj.r) createdElement.setAttribute("r", obj.r);
+  if (obj.cy) createdElement.setAttribute("cy", obj.cy);
+  if (obj.cx) createdElement.setAttribute("cx", obj.cx);
   return createdElement;
 }
 
