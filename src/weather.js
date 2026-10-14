@@ -1,12 +1,11 @@
 import { convertToFahrenheit } from "./helpers.js";
 
-// weather object for storing data
 const weatherObj = {
   weatherData: {},
   unit: "",
 };
 
-// Unpack to get only the desired data
+// Unpack to get the desired data
 function cleanData(
   {
     resolvedAddress,

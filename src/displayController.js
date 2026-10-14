@@ -1,15 +1,26 @@
 import { getWeatherData, weatherObj } from "./weather.js";
-import { createWeatherCard, createLoadingCard, showErrorCard } from "./DOM.js";
-
+import {
+  createWeatherCard,
+  createLoadingCard,
+  showErrorCard,
+  createInitialCard,
+} from "./DOM.js";
 import { convertToCelsius, convertToFahrenheit } from "./helpers.js";
 import { validateInput } from "./validateInput.js";
 
 const input = document.getElementById("search-location");
 const form = document.forms[0];
-const converterBtn = document.getElementById("converter");
+let converterBtn;
 
 function sendLocation(e) {
   e.preventDefault();
+
+  // create the container if it doesn't exist
+  if (!document.getElementById("card-container")) {
+    createInitialCard();
+    converterBtn = document.getElementById("converter");
+    converterBtn.addEventListener("click", switchDegrees);
+  }
 
   // check the validity of the input
   validateInput();
@@ -33,11 +44,9 @@ function switchDegrees() {
   if (document.querySelector("#card-container svg")) return;
 
   if (converterBtn.className === "F") {
-    // modifying the button
     converterBtn.className = "C";
     converterBtn.textContent = "℃";
 
-    // modifying the data
     weatherObj.weatherData.unit = "C";
     weatherObj.weatherData.temp = convertToCelsius(weatherObj.weatherData.temp);
   } else {
@@ -50,12 +59,11 @@ function switchDegrees() {
     );
   }
 
-  // rebuild the card only if the it has valid weather content in it
+  // rebuild the card only if it has valid weather content
   if (document.querySelector("#card-container .degree")) {
     createWeatherCard(weatherObj.weatherData);
   }
 }
 
 form.addEventListener("submit", sendLocation);
-converterBtn.addEventListener("click", switchDegrees);
 input.addEventListener("change", validateInput);

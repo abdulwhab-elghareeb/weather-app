@@ -132,16 +132,10 @@ function showErrorCard(errorMessage) {
   document.getElementById("card-container").append(errorIcon, message);
 }
 
-// create the important stuff
-function initialRendering() {
-  createSearchForm();
-  createInitialCard();
-}
-
 export {
   createSearchForm,
+  createInitialCard,
   createWeatherCard,
   createLoadingCard,
   showErrorCard,
-  initialRendering,
 };

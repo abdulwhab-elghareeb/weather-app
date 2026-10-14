@@ -1,5 +1,7 @@
 import "./style.css";
-import { initialRendering } from "./DOM.js";
+import { createSearchForm } from "./DOM.js";
 
-initialRendering(); // renders the form and the initial card
+createSearchForm();
+
+// importing the display module after creating the initial DOM
 import("./displayController.js");
