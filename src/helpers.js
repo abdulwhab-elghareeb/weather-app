@@ -27,6 +27,7 @@ export function createDOMElement(obj) {
   if (obj.cy) createdElement.setAttribute("cy", obj.cy);
   if (obj.cx) createdElement.setAttribute("cx", obj.cx);
   if (obj.required) createdElement.setAttribute("required", "");
+
   return createdElement;
 }
 

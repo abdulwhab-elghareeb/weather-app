@@ -1,4 +1,4 @@
-import { getWeatherData, weatherObj } from "./weather.js";
+import { getWeatherData } from "./weather.js";
 import {
   createWeatherCard,
   createLoadingCard,
@@ -10,10 +10,26 @@ import { validateInput } from "./validateInput.js";
 
 const input = document.getElementById("search-location");
 const form = document.forms[0];
-let converterBtn;
+let converterBtn; // well be assigned after the first form submission
+let weatherData;
+
+async function displayWeatherData() {
+  try {
+    const unit = weatherData ? weatherData.unit : "C";
+    const data = await getWeatherData(input.value, unit);
+    weatherData = data;
+    createWeatherCard(data);
+  } catch {
+    showErrorCard("Location not found....");
+  }
+}
 
 function sendLocation(e) {
   e.preventDefault();
+
+  // check the validity of the input
+  validateInput();
+  if (!form.checkValidity()) return;
 
   // create the container if it doesn't exist
   if (!document.getElementById("card-container")) {
@@ -22,20 +38,8 @@ function sendLocation(e) {
     converterBtn.addEventListener("click", switchDegrees);
   }
 
-  // check the validity of the input
-  validateInput();
-  if (!form.checkValidity()) return;
-
   createLoadingCard(); // add the loading component
-
-  getWeatherData(input.value, weatherObj.weatherData.unit || "C")
-    .then((result) => {
-      createWeatherCard(result);
-    })
-    .catch(() => {
-      showErrorCard("Location not found....");
-    });
-
+  displayWeatherData();
   form.reset();
 }
 
@@ -47,21 +51,19 @@ function switchDegrees() {
     converterBtn.className = "C";
     converterBtn.textContent = "℃";
 
-    weatherObj.weatherData.unit = "C";
-    weatherObj.weatherData.temp = convertToCelsius(weatherObj.weatherData.temp);
+    weatherData.unit = "C";
+    weatherData.temp = convertToCelsius(weatherData.temp);
   } else {
     converterBtn.className = "F";
     converterBtn.textContent = "℉";
 
-    weatherObj.weatherData.unit = "F";
-    weatherObj.weatherData.temp = convertToFahrenheit(
-      weatherObj.weatherData.temp,
-    );
+    weatherData.unit = "F";
+    weatherData.temp = convertToFahrenheit(weatherData.temp);
   }
 
   // rebuild the card only if it has valid weather content
   if (document.querySelector("#card-container .degree")) {
-    createWeatherCard(weatherObj.weatherData);
+    createWeatherCard(weatherData);
   }
 }
 
