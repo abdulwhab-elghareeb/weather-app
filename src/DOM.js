@@ -33,7 +33,7 @@ function createSearchForm() {
   return form;
 }
 
-function createWeatherCard({ resolvedAddress, temp, conditions }) {
+function createWeatherCard({ resolvedAddress, temp, conditions, icon }) {
   cleanCard(); // first remove the card
 
   const container = createDOMElement({ elemType: "div", id: "card-container" });
@@ -57,7 +57,12 @@ function createWeatherCard({ resolvedAddress, temp, conditions }) {
     textContent: conditions,
   });
 
-  container.append(addressDiv, tempDiv, conditionsDiv);
+  const weatherIconImg = createDOMElement({ elemType: "img" });
+  import(`./assets/${icon}.svg`).then(
+    (iconModule) => (weatherIconImg.src = iconModule.default),
+  );
+
+  container.append(addressDiv, tempDiv, conditionsDiv, weatherIconImg);
   document.body.append(container);
 }
 

@@ -182,3 +182,8 @@ label {
 #conditions {
   font-size: 1.5rem;
 }
+
+img {
+  width: 70px;
+  height: 70px;
+}
