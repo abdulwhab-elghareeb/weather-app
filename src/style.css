@@ -81,8 +81,8 @@ h6 {
     17px 33.9px 42.7px -2.1px hsl(var(--shadow-color) / 0.34),
     25px 50px 62.9px -2.5px hsl(var(--shadow-color) / 0.34);
 
-  --color: #1d3557;
-  --btns: #f4846b;
+  --color: hsl(300, 20%, 15%);
+  --btns: hsl(11, 86%, 89%);
 }
 
 button {
@@ -90,7 +90,7 @@ button {
   outline: none;
   border-style: solid;
   background-color: var(--btns);
-  color: #fff3b0;
+  color: hsl(51, 100%, 15%);
 }
 
 body {
@@ -109,17 +109,13 @@ body {
   background-size: cover;
 }
 
-#converter {
-  width: max-content;
-}
-
 form div {
   display: flex;
+  margin-top: 5px;
 }
 
 input,
-form button,
-#converter {
+form button {
   border: 2px solid var(--color);
 }
 
@@ -129,8 +125,11 @@ input {
   padding: 2px 4px;
   border-radius: 4px 0 0 4px;
   outline: none;
+  color: var(--color);
 
-  background-color: hsl(204, 45%, 92%);
+  background-color: transparent;
+  mix-blend-mode: color-burn;
+  backdrop-filter: blur(12px);
 }
 
 form button {
@@ -145,18 +144,28 @@ label {
 }
 
 #converter {
-  margin-top: 10px;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+
+  color: hsl(0, 0%, 55%);
+  background-color: hsl(208, 100%, 100%);
+
   padding: 2px 15px;
-  border-radius: 8px;
+  border: none;
+  border-radius: 16px;
+  width: 100px;
 }
 
 #card-container {
-  backdrop-filter: blur(8px);
+  position: relative;
+
+  backdrop-filter: blur(10px);
   mix-blend-mode: difference;
 
   background-color: transparent;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  color: #f7fafc;
+  color: hsl(204, 45%, 95%);
 
   width: 700px;
   height: 600px;
@@ -164,14 +173,20 @@ label {
   align-items: center;
   justify-items: center;
 
-  padding: 10px;
+  padding: 13px 16px;
   border-radius: 16px;
 
   text-align: center;
 }
 
-.degree::after {
-  content: "°";
+.degree {
+  &.F::after {
+    content: "℉";
+  }
+
+  &.C::after {
+    content: "℃";
+  }
 }
 
 #address {
@@ -187,9 +202,14 @@ label {
   font-size: 1.5rem;
 }
 
+#description {
+  width: 44ch;
+  color: hsl(from currentColor h s calc(l - 10));
+}
+
 img {
-  width: 70px;
-  height: 70px;
+  width: 75px;
+  height: 75px;
 }
 
 /* Loading */

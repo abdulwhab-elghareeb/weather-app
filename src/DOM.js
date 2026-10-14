@@ -1,10 +1,10 @@
 import { createDOMElement } from "./helpers.js";
 
-function cleanCard() {
+function cleanCardContent() {
   const card = document.getElementById("card-container");
-  if (card) {
-    card.remove();
-  }
+  const converterBtn = card.querySelector("#converter")
+
+  card.replaceChildren(converterBtn);
 }
 
 function createSearchForm() {
@@ -33,10 +33,15 @@ function createSearchForm() {
   return form;
 }
 
-function createWeatherCard({ resolvedAddress, temp, conditions, icon }) {
-  cleanCard(); // first remove the card
-
-  const container = createDOMElement({ elemType: "div", id: "card-container" });
+function createWeatherCard({
+  resolvedAddress,
+  temp,
+  unit,
+  conditions,
+  description,
+  icon,
+}) {
+  cleanCardContent(); // first remove all card content
 
   const addressDiv = createDOMElement({
     elemType: "div",
@@ -47,7 +52,7 @@ function createWeatherCard({ resolvedAddress, temp, conditions, icon }) {
   const tempDiv = createDOMElement({
     elemType: "div",
     id: "temp",
-    className: "degree",
+    className: `degree ${unit}`,
     textContent: temp,
   });
 
@@ -55,6 +60,17 @@ function createWeatherCard({ resolvedAddress, temp, conditions, icon }) {
     elemType: "div",
     id: "conditions",
     textContent: conditions,
+  });
+
+  const descriptionDiv = createDOMElement({
+    elemType: "div",
+    id: "description",
+    textContent: description,
+  });
+
+  const weatherDescDiv = createDOMElement({
+    elemType: "div",
+    id: "weather-description",
   });
 
   const weatherIconImg = createDOMElement({ elemType: "img" });
@@ -67,24 +83,14 @@ function createWeatherCard({ resolvedAddress, temp, conditions, icon }) {
       (document.body.style.backgroundImage = `url("${iconModule.default}")`),
   );
 
-  container.append(addressDiv, tempDiv, conditionsDiv, weatherIconImg);
-  document.body.append(container);
-}
-
-function createConverterButton() {
-  const button = createDOMElement({
-    elemType: "button",
-    id: "converter",
-    className: "F",
-    textContent: "Fahrenheit",
-  });
-
-  document.body.append(button);
+  weatherDescDiv.append(conditionsDiv, descriptionDiv);
+  document
+    .getElementById("card-container")
+    .append(addressDiv, tempDiv, weatherDescDiv, weatherIconImg);
 }
 
 function createLoadingCard() {
-  cleanCard();
-  const container = createDOMElement({ elemType: "div", id: "card-container" });
+  cleanCardContent();
   const svg = createDOMElement({ elemType: "svg", viewBox: "25 25 50 50" });
   const circle = createDOMElement({
     elemType: "circle",
@@ -93,13 +99,31 @@ function createLoadingCard() {
     cx: "50",
   });
   svg.append(circle);
-  container.append(svg);
+  document.getElementById("card-container").append(svg);
+}
+
+function createInitialCard() {
+  const degreeConverter = createDOMElement({
+    elemType: "button",
+    id: "converter",
+    className: "C",
+    textContent: "℃",
+  });
+  const container = createDOMElement({ elemType: "div", id: "card-container" });
+
+  container.append(degreeConverter);
   document.body.append(container);
+}
+
+// create the important stuff
+function initialRendering() {
+  createSearchForm();
+  createInitialCard();
 }
 
 export {
   createSearchForm,
   createWeatherCard,
-  createConverterButton,
   createLoadingCard,
+  initialRendering,
 };

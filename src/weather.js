@@ -1,8 +1,18 @@
 import { convertToFahrenheit } from "./helpers.js";
 
+// weather object for storing data
+const weatherObj = {
+  weatherData: {},
+  unit: "",
+};
+
 // Unpack to get only the desired data
 function cleanData(
-  { resolvedAddress, currentConditions: { conditions, temp, icon } },
+  {
+    resolvedAddress,
+    currentConditions: { conditions, temp, icon },
+    description,
+  },
   unit,
 ) {
   if (unit === "F") {
@@ -11,15 +21,18 @@ function cleanData(
     temp = Math.round(temp);
   }
 
-  {
-    return {
-      resolvedAddress,
-      conditions,
-      temp,
-      icon,
-      unit,
-    };
-  }
+  const cleanedData = {
+    resolvedAddress,
+    conditions,
+    description,
+    temp,
+    icon,
+    unit,
+  };
+
+  weatherObj.weatherData = cleanData;
+
+  return cleanedData;
 }
 
 function getWeatherData(location, unit = "C") {
@@ -32,4 +45,4 @@ function getWeatherData(location, unit = "C") {
     .then((result) => cleanData(result, unit));
 }
 
-export { getWeatherData };
+export { getWeatherData, weatherObj };

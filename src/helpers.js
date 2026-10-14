@@ -11,7 +11,7 @@ export function createDOMElement(obj) {
   }
 
   if (obj.textContent) createdElement.textContent = obj.textContent;
-  if (obj.className) createdElement.classList.add(obj.className);
+  if (obj.className) createdElement.className = obj.className;
   if (obj.id) createdElement.setAttribute("id", obj.id);
   if (obj.dataId) createdElement.dataset.id = obj.dataId;
   if (obj.src) createdElement.src = obj.src;

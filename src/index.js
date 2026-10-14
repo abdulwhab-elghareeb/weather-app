@@ -1,2 +1,2 @@
 import "./style.css";
-import "./displayController.js";
+import "./displayController.js"
