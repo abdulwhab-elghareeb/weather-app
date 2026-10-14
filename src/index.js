@@ -1,3 +1,2 @@
-
-import "./style.css"
-import "./displayController.js"
+import "./style.css";
+import "./displayController.js";
