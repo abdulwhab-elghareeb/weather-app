@@ -99,7 +99,7 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 16px;
-  gap: 16px;
+  gap: 4rem;
 
   color: var(--color);
   font-family: var(--font-family);
@@ -110,8 +110,12 @@ body {
 }
 
 form div {
-  display: flex;
+  display: grid;
   margin-top: 5px;
+
+  grid-template-areas:
+    "input submit"
+    "error error";
 }
 
 input,
@@ -120,6 +124,8 @@ form button {
 }
 
 input {
+  grid-area: input;
+
   width: 100%;
   height: 30px;
   padding: 2px 4px;
@@ -132,7 +138,17 @@ input {
   backdrop-filter: blur(12px);
 }
 
+input:user-valid {
+  border-color: green;
+}
+
+input:user-invalid {
+  border-color: red;
+}
+
 form button {
+  grid-area: submit;
+
   border-radius: 0 4px 4px 0;
   border-left: none;
 }
@@ -181,15 +197,18 @@ label {
 
 .degree {
   &.F::after {
-    content: "℉";
+    content: "°F";
+    font-weight: 300;
   }
 
   &.C::after {
-    content: "℃";
+    content: "°C";
+    font-weight: 300;
   }
 }
 
 #address {
+  width: 30ch;
   font-size: 2.2rem;
 }
 
@@ -205,6 +224,32 @@ label {
 #description {
   width: 44ch;
   color: hsl(from currentColor h s calc(l - 10));
+}
+
+.error {
+  grid-area: error;
+}
+
+.error.active {
+  display: block;
+  color: red;
+  background-color: hsl(0, 100%, 87%);
+  text-align: center;
+  font-size: 12px;
+  padding: 2px;
+  width: 100%;
+
+  border-radius: 0 0 4px 4px;
+}
+
+#error-message {
+  font-size: 3rem;
+  margin-bottom: auto;
+}
+
+#not-found-img {
+  height: 170px;
+  width: 170px;
 }
 
 img {

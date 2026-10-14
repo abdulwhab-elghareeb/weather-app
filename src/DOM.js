@@ -1,8 +1,9 @@
 import { createDOMElement } from "./helpers.js";
+import notFoundIcon from "./assets/icons/not-found.svg";
 
 function cleanCardContent() {
   const card = document.getElementById("card-container");
-  const converterBtn = card.querySelector("#converter")
+  const converterBtn = card.querySelector("#converter");
 
   card.replaceChildren(converterBtn);
 }
@@ -19,14 +20,16 @@ function createSearchForm() {
   const searchInput = createDOMElement({
     elemType: "input",
     id: "search-location",
+    required: true,
   });
+  const errorSpan = createDOMElement({ elemType: "span", className: "error" });
 
   const submitBtn = createDOMElement({
     elemType: "button",
     textContent: "search",
   });
 
-  div.append(searchInput, submitBtn);
+  div.append(searchInput, errorSpan, submitBtn);
   form.append(label, div);
   document.body.append(form);
 
@@ -115,6 +118,20 @@ function createInitialCard() {
   document.body.append(container);
 }
 
+function showErrorCard(errorMessage) {
+  cleanCardContent();
+
+  const errorIcon = createDOMElement({ elemType: "img", id: "not-found-img" });
+  const message = createDOMElement({
+    elemType: "div",
+    textContent: errorMessage,
+    id: "error-message",
+  });
+  errorIcon.src = notFoundIcon;
+
+  document.getElementById("card-container").append(errorIcon, message);
+}
+
 // create the important stuff
 function initialRendering() {
   createSearchForm();
@@ -125,5 +142,6 @@ export {
   createSearchForm,
   createWeatherCard,
   createLoadingCard,
+  showErrorCard,
   initialRendering,
 };

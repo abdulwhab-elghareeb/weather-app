@@ -1,13 +1,8 @@
 import { getWeatherData, weatherObj } from "./weather.js";
-import {
-  createWeatherCard,
-  createLoadingCard,
-  initialRendering,
-} from "./DOM.js";
+import { createWeatherCard, createLoadingCard, showErrorCard } from "./DOM.js";
 
 import { convertToCelsius, convertToFahrenheit } from "./helpers.js";
-
-initialRendering(); // renders the form and the initial card
+import { validateInput } from "./validateInput.js";
 
 const input = document.getElementById("search-location");
 const form = document.forms[0];
@@ -16,13 +11,19 @@ const converterBtn = document.getElementById("converter");
 function sendLocation(e) {
   e.preventDefault();
 
-  const weatherData = getWeatherData(input.value, weatherObj.weatherData.unit || "C");
-  createLoadingCard();
+  // check the validity of the input
+  validateInput();
+  if (!form.checkValidity()) return;
 
-  weatherData.then((result) => {
-    weatherObj.weatherData = result;
-    createWeatherCard(result);
-  });
+  createLoadingCard(); // add the loading component
+
+  getWeatherData(input.value, weatherObj.weatherData.unit || "C")
+    .then((result) => {
+      createWeatherCard(result);
+    })
+    .catch(() => {
+      showErrorCard("Location not found....");
+    });
 
   form.reset();
 }
@@ -49,7 +50,7 @@ function switchDegrees() {
     );
   }
 
-  // rebuild the card only if the card has valid content in it
+  // rebuild the card only if the it has valid weather content in it
   if (document.querySelector("#card-container .degree")) {
     createWeatherCard(weatherObj.weatherData);
   }
@@ -57,3 +58,4 @@ function switchDegrees() {
 
 form.addEventListener("submit", sendLocation);
 converterBtn.addEventListener("click", switchDegrees);
+input.addEventListener("change", validateInput);
