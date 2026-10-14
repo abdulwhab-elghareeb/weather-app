@@ -58,8 +58,13 @@ function createWeatherCard({ resolvedAddress, temp, conditions, icon }) {
   });
 
   const weatherIconImg = createDOMElement({ elemType: "img" });
-  import(`./assets/${icon}.svg`).then(
+  import(`./assets/icons/${icon}.svg`).then(
     (iconModule) => (weatherIconImg.src = iconModule.default),
+  );
+
+  import(`./assets/images/${icon}.jpg`).then(
+    (iconModule) =>
+      (document.body.style.backgroundImage = `url("${iconModule.default}")`),
   );
 
   container.append(addressDiv, tempDiv, conditionsDiv, weatherIconImg);

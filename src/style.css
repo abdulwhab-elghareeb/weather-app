@@ -105,7 +105,7 @@ body {
   font-family: var(--font-family);
   font-weight: 400;
 
-  background-image: url(./assets/clayton-tonna-kdQMjoA9oYQ-unsplash.jpg);
+  background-image: url(./assets/images/default.jpg);
   background-size: cover;
 }
 
@@ -139,6 +139,7 @@ form button {
 }
 
 label {
+  mix-blend-mode: color-burn;
   font-size: 2rem;
   font-weight: 500;
 }
@@ -150,8 +151,11 @@ label {
 }
 
 #card-container {
+  backdrop-filter: blur(8px);
+  mix-blend-mode: difference;
+
   background-color: transparent;
-  box-shadow: var(--shadow-elevation-high);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   color: #f7fafc;
 
   width: 700px;
