@@ -11,7 +11,7 @@ createSearchForm();
 createConverterButton();
 
 const query = {
-  locationData: "",
+  locationData: {},
 };
 
 const input = document.getElementById("search-location");
@@ -40,16 +40,16 @@ function switchDegrees() {
 
     query.locationData.unit = "C";
     query.locationData.temp = convertToCelsius(query.locationData.temp);
-    createWeatherCard(query.locationData);
   } else {
     converterBtn.className = "F";
     converterBtn.textContent = "Fahrenheit";
 
     query.locationData.unit = "F";
     query.locationData.temp = convertToFahrenheit(query.locationData.temp);
-    createWeatherCard(query.locationData);
   }
+
+  createWeatherCard(query.locationData);
 }
 
 form.addEventListener("submit", sendLocation);
-converterBtn.addEventListener("click", () => switchDegrees());
+converterBtn.addEventListener("click", switchDegrees);

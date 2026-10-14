@@ -13,19 +13,21 @@ function createSearchForm() {
   const label = createDOMElement({
     elemType: "label",
     for: "search-location",
-    textContent: "Search",
+    textContent: "Search for a location",
   });
+
   const searchInput = createDOMElement({
     elemType: "input",
     id: "search-location",
   });
+
   const submitBtn = createDOMElement({
     elemType: "button",
     textContent: "search",
   });
 
-  div.append(label, searchInput);
-  form.append(div, submitBtn);
+  div.append(searchInput, submitBtn);
+  form.append(label, div);
   document.body.append(form);
 
   return form;
@@ -45,6 +47,7 @@ function createWeatherCard({ resolvedAddress, temp, conditions }) {
   const tempDiv = createDOMElement({
     elemType: "div",
     id: "temp",
+    className: "degree",
     textContent: temp,
   });
 
@@ -65,6 +68,7 @@ function createConverterButton() {
     className: "F",
     textContent: "Fahrenheit",
   });
+
   document.body.append(button);
 }
 

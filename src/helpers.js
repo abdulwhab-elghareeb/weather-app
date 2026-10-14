@@ -18,14 +18,9 @@ export function createDOMElement(obj) {
 }
 
 export function convertToCelsius(fahrenheit) {
-  return limitDecimalNumbers((fahrenheit - 32) / 1.8, 1);
+  return Math.round((fahrenheit - 32) / 1.8);
 }
 
 export function convertToFahrenheit(celsius) {
-  return limitDecimalNumbers(celsius * 1.8 + 32, 1);
-}
-
-function limitDecimalNumbers(number, decimalLimit = 3) {
-  const limit = 10 ** decimalLimit;
-  return Math.round(number * limit) / limit;
+  return Math.round(celsius * 1.8 + 32);
 }

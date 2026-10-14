@@ -7,6 +7,8 @@ function cleanData(
 ) {
   if (unit === "C") {
     temp = convertToCelsius(temp);
+  } else {
+    temp = Math.round(temp);
   }
   {
     return {
