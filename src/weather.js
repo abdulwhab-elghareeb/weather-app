@@ -4,7 +4,7 @@ import { convertToFahrenheit } from "./helpers.js";
 function cleanData(
   {
     resolvedAddress,
-    currentConditions: { conditions, temp, icon },
+    currentConditions: { conditions, temp, icon, datetime },
     description,
   },
   unit,
@@ -22,6 +22,7 @@ function cleanData(
     temp,
     icon,
     unit,
+    datetime,
   };
   return cleanedData;
 }
@@ -36,6 +37,7 @@ async function getWeatherData(location, unit = "C") {
   }
 
   const weatherDataObj = await fetchedData.json();
+  console.log(weatherDataObj);
   return cleanData(weatherDataObj, unit);
 }
 

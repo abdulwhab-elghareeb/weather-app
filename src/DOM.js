@@ -43,6 +43,7 @@ function createWeatherCard({
   conditions,
   description,
   icon,
+  datetime,
 }) {
   cleanCardContent(); // first remove all card content
 
@@ -86,10 +87,16 @@ function createWeatherCard({
       (document.body.style.backgroundImage = `url("${iconModule.default}")`),
   );
 
+  const date = createDOMElement({
+    elemType: "div",
+    id: "date",
+    textContent: datetime,
+  });
+
   weatherDescDiv.append(conditionsDiv, descriptionDiv);
   document
     .getElementById("card-container")
-    .append(addressDiv, tempDiv, weatherDescDiv, weatherIconImg);
+    .append(addressDiv, tempDiv, weatherDescDiv, weatherIconImg, date);
 }
 
 function createLoadingCard() {

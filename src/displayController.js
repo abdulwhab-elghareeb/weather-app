@@ -15,8 +15,8 @@ let weatherData;
 
 async function displayWeatherData() {
   try {
-    const unit = weatherData ? weatherData.unit : "C";
-    const data = await getWeatherData(input.value, unit);
+    // const unit = weatherData ? weatherData.unit : "C";
+    const data = await getWeatherData(input.value, weatherData?.unit || "C");
     weatherData = data;
     createWeatherCard(data);
   } catch {

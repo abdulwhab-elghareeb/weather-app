@@ -212,6 +212,10 @@ label {
   font-size: 2.2rem;
 }
 
+#date {
+  font-size: 1.25rem;
+}
+
 #temp {
   font-size: 5rem;
   font-weight: 200;
